@@ -1,34 +1,19 @@
 const express = require('express');
-const mongoose = require('mongoose');
-const config = require('config');
+const passport = require('passport');
 
-const users = require("./routes/api/users");
-const profiles = require("./routes/api/profiles");
-const posts = require("./routes/api/posts");
+const app = express();
 
 // Startup
 require('./startup/config')();
+require('./startup/db')();
+require('./startup/routes')(app);
 
-// DB config
-const db = config.get('mongoURI');
+// Middleware
+app.use(passport.initialize());
 
-// Connect to MongoDB
-mongoose
-    .connect(db, { useNewUrlParser: true })
-    .then(() => console.log('MongoDB connected...'))
-    .catch(err => console.error(err))
+// Passport config
+require('./config/passport')(passport);
 
-// Express app
-const app = express();
-
-app.get('/', (req, res) => {
-    res.send('Hello nerwin');
-});
-
-// Uses routes
-app.use('/api/users', users);
-app.use('/api/profiles', profiles);
-app.use('/api/posts', posts);
 
 const port = process.env.PORT || 5000;
-app.listen(port, () => console.log(`Server running on port ${port}`));
+app.listen(port, () => console.info(`Server running on port ${port}`));
