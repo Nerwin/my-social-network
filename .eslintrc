@@ -1,0 +1,46 @@
+{
+  "parser": "babel-eslint",
+	"env": {
+		"node": true,
+		"es6": true
+	},
+	"rules": {
+		"no-unused-vars": "warn",
+		"no-extra-semi": "warn",
+    "global-require": "warn",
+    "block-spacing": "warn",
+    "brace-style": ["warn", "1tbs", { "allowSingleLine": true }],
+    "comma-dangle": ["warn", "always-multiline"],
+    "capitalized-comments": ["warn", "always", { "ignoreConsecutiveComments": true }],
+    "comma-spacing": ["warn", { "before": false, "after": true }],
+    "comma-style": "warn",
+    "computed-property-spacing": "warn",
+    "eol-last": "warn",
+    "func-call-spacing": "warn",
+    "indent": ["error", 2],
+    "no-mixed-spaces-and-tabs": ["error", "smart-tabs"],
+		"semi": ["error", "always"],
+    "react/jsx-uses-react": "error",
+    "react/jsx-uses-vars": "error",
+    "consistent-return": "off",
+    "no-shadow": "off",
+    "handle-callback-err": "off",
+    "no-console": "off",
+		"no-cond-assign": "off"
+	},
+	"extends": [
+      "eslint:recommended",
+      "airbnb",
+      "plugin:security/recommended",
+      "plugin:react/recommended"
+    ], 
+  "plugins": [
+    "react"
+  ],
+	"parserOptions": {
+        "ecmaVersion": 6,
+        "ecmaFeatures": {
+            "jsx": true
+        }
+	}
+}
