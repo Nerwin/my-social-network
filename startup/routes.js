@@ -1,6 +1,6 @@
 const express = require('express');
 const users = require("../routes/api/users");
-const profiles = require("../routes/api/profiles");
+const profile = require("../routes/api/profile");
 const posts = require("../routes/api/posts");
 
 
@@ -10,6 +10,6 @@ module.exports = function(app) {
     
     // Uses routes
     app.use('/api/users', users);
-    app.use('/api/profiles', profiles);
+    app.use('/api/profile', profile);
     app.use('/api/posts', posts);
 };

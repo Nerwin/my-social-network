@@ -2,21 +2,14 @@ const express = require('express');
 const router = express.Router();
 const gravatar = require('gravatar');
 const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const config = require('config');
 const passport = require('passport');
-
-//const validateRegisterInput = require('../../validation/register');
 
 // Load User model
 const { User, validateUser, validateLogin } = require('../../models/User');
 
-// @route   GET api/users/test
-// @desc    Tests users route
-// @access  Public
-router.get('/test', (req, res) => {
-    return res.json({msg: "Users works"});
-});
+/************/
+/**  USER  **/
+/************/
 
 // @route   POST api/users/register
 // @desc    Register users route
