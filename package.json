@@ -4,21 +4,26 @@
   "description": "Social network for developers made with MERN stack",
   "main": "server.js",
   "scripts": {
+    "client-install": "npm install --prefix client",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js"
+    "start": "node server.js",
+    "server": "nodemon server.js",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "keywords": [],
   "author": "Nerwin",
   "license": "MIT",
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "concurrently": "^4.0.1",
     "config": "^2.0.1",
     "express": "^4.16.3",
     "gravatar": "^1.6.0",
     "joi": "^13.6.0",
     "jsonwebtoken": "^8.3.0",
     "lodash": "^4.17.11",
-    "mongoose": "^5.2.17",
+    "mongoose": "^5.2.18",
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0"
   },
