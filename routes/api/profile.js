@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 const _ = require('lodash');
+const formatJoiError = require('../../utils/formatError');
 
 // Load models
 const {
@@ -83,7 +84,7 @@ router.get('/user/:user_id', (req, res) => {
 router.post('/', passport.authenticate('jwt', { session: false }), (req, res) => {
   // Validation
   const { error } = validateProfile(req.body);
-  if (error) return res.status(400).send(error.details.map(detail => detail.message));
+  if (error) return res.status(400).send(formatJoiError(error));
 
   // Get fields
   const profileFields = {};
@@ -152,7 +153,7 @@ router.delete('/', passport.authenticate('jwt', { session: false }), (req, res) 
 router.post('/experience', passport.authenticate('jwt', { session: false }), (req, res) => {
   // Validation
   const { error } = validateExperience(req.body);
-  if (error) return res.status(400).send(error.details.map(detail => detail.message));
+  if (error) return res.status(400).send(formatJoiError(error));
 
   Profile.findOne({ user: req.user.id })
     .then((profile) => {
@@ -192,7 +193,7 @@ router.delete('/experience/:exp_id', passport.authenticate('jwt', { session: fal
 router.post('/education', passport.authenticate('jwt', { session: false }), (req, res) => {
   // Validation
   const { error } = validateEducation(req.body);
-  if (error) return res.status(400).send(error.details.map(detail => detail.message));
+  if (error) return res.status(400).send(formatJoiError(error));
 
   Profile.findOne({ user: req.user.id })
     .then((profile) => {

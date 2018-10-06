@@ -33,8 +33,9 @@ const UserSchema = new mongoose.Schema({
   },
 });
 
-UserSchema.methods.generateAuthToken = () => {
+UserSchema.methods.generateAuthToken = function generateAuthToken() {
   const payload = { id: this.id, name: this.name, avatar: this.avatar }; // Create JWT payload
+
   return jwt.sign(payload, config.get('jwtKey'), { expiresIn: 3600 });
 };
 
@@ -59,7 +60,7 @@ function validateUser(user) {
 function validateLogin(login) {
   const schema = {
     email: Joi.string().required().email(),
-    password: Joi.string().required(),
+    password: Joi.string().required()
   };
 
   return Joi.validate(login, schema, { abortEarly: false });

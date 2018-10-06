@@ -2,6 +2,7 @@ const express = require('express');
 
 const router = express.Router();
 const passport = require('passport');
+const formatJoiError = require('../../utils/formatError');
 
 // Load model
 const { Post, validatePost, validateComment } = require('../../models/Posts');
@@ -36,7 +37,7 @@ router.get('/:id', (req, res) => {
 router.post('/', passport.authenticate('jwt', { session: false }), (req, res) => {
   // Validation
   const { error } = validatePost(req.body);
-  if (error) return res.status(400).send(error.details.map(detail => detail.message));
+  if (error) return res.status(400).send(formatJoiError(error));
 
   const { text, name, avatar } = req.body;
   const user = req.user.id;
@@ -103,7 +104,7 @@ router.post('/like/:id', passport.authenticate('jwt', { session: false }), (req,
 router.post('/comment/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
   // Validation
   const { error } = validateComment(req.body);
-  if (error) return res.status(400).send(error.details.map(detail => detail.message));
+  if (error) return res.status(400).send(formatJoiError(error));
 
   Post.findById(req.params.id)
     .then((post) => {

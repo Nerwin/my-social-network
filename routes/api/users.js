@@ -4,6 +4,7 @@ const router = express.Router();
 const gravatar = require('gravatar');
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
+const { formatJoiError } = require('../../utils/formatError');
 
 // Load User model
 const { User, validateUser, validateLogin } = require('../../models/User');
@@ -18,7 +19,7 @@ const { User, validateUser, validateLogin } = require('../../models/User');
 router.post('/register', (req, res) => {
   // Validation
   const { error } = validateUser(req.body);
-  if (error) return res.status(400).send(error.details.map(detail => detail.message));
+  if (error) return res.status(400).send(formatJoiError(error));
 
   User.findOne({ email: req.body.email })
     .then((user) => {
@@ -56,7 +57,7 @@ router.post('/register', (req, res) => {
 router.post('/login', (req, res) => {
   // Validation
   const { error } = validateLogin(req.body);
-  if (error) return res.status(400).send(error.details[0].message);
+  if (error) return res.status(400).send(formatJoiError(error));
 
   const { email, password } = req.body;
 
@@ -73,6 +74,7 @@ router.post('/login', (req, res) => {
         .then((isMatch) => {
           if (isMatch) {
             const token = user.generateAuthToken();
+
             res.json({
               success: true,
               token: `Bearer ${token}`,
